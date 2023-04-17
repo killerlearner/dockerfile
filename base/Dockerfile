@@ -1,0 +1,8 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive PYTHONWARNINGS=ignore
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+RUN apt-get -qq update && apt-get -qq install -y tzdata curl aria2 python3 python3-pip \
+    locales python3-lxml pv jq nano ffmpeg p7zip-full p7zip-rar && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get autoremove && apt-get autoclean
