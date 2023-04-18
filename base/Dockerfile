@@ -1,73 +1,8 @@
-FROM alpine:edge
+FROM ubuntu:latest
 
+ARG DEBIAN_FRONTEND=noninteractive PYTHONWARNINGS=ignore
+RUN apt-get -qq update && apt-get -qq install -y tzdata curl aria2 python3 python3-pip qbittorrent-nox\
+    locales python3-lxml pv jq nano ffmpeg p7zip-full p7zip-rar && rm -rf /var/lib/apt/lists/*
 
-# LABEL
-
-LABEL org.opencontainers.image.source="https://github.com/killerlearner"
-LABEL org.opencontainers.image.description="Docker for mltb"
-
-
-ARG TARGETPLATFORM BUILDPLATFORM
-
-# Setup Working Directory
-
-WORKDIR /usr/src/app
-RUN chmod -R 777 /usr/src/app && \
-    chmod -R +x /usr/src/app && \
-    chmod -R 705 /usr/src/app
-
-ENV TZ Europe/London
-
-
-# Installing basic packages
-
-RUN echo -e "\e[32m[INFO]: Installing basic packages.\e[0m" && \
-    apk update && apk upgrade && \
-    apk add --upgrade --no-cache \
-    sudo py3-wheel musl-dev musl python3 \
-    python3-dev busybox musl-locales github-cli lshw \
-    qbittorrent-nox py3-pip py3-lxml aria2 p7zip \
-    xz curl pv jq ffmpeg parallel \
-    neofetch git make g++ gcc automake zip unzip \
-    autoconf speedtest-cli mediainfo bash \
-    musl-utils tzdata gcompat libmagic \
-    libffi-dev py3-virtualenv libffi \
-    dpkg cmake icu-data-full apk-tools \
-    nodejs coreutils npm bash-completion bash-doc \
-    && npm install -g localtunnel kill-port && \
-    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
-
-SHELL ["/bin/bash", "-c"]
-
-
-# Installing Build Tools
-
-RUN echo -e "\e[32m[INFO]: Installing Building tools.\e[0m" && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    sudo apk add --upgrade --no-cache \
-    libtool curl-dev libsodium-dev c-ares-dev sqlite-dev freeimage-dev swig boost-dev \
-    libpthread-stubs zlib zlib-dev libpq-dev clang clang-dev ccache gettext gettext-dev \
-    gawk crypto++ crypto++-dev libjpeg-turbo-dev 
-
-# Caching Pip Requirements
-
-RUN echo -e "\e[32m[INFO]: Caching Pip Requirements.\e[0m" && \  
-    wget https://raw.githubusercontent.com/killerlearner/dockerfile/main/mltb/requirements.txt -O requirements.txt && \
-    pip3 install -U -r requirements.txt
-
-# Running Final Apk Update
-
-RUN echo -e "\e[32m[INFO]: Running Final Apk Update.\e[0m" && \
-    sudo apk update && apk upgrade
-
-
-# Setup Language Environments
-ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
-RUN echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile.d/locale.sh && \
-    sed -i 's|LANG=C.UTF-8|LANG=en_US.UTF-8|' /etc/profile.d/locale.sh && \
-    cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
-    rm -rf *
-
-
-SHELL ["/bin/bash", "-c"]
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
