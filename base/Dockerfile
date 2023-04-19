@@ -2,7 +2,6 @@ FROM ubuntu:20.04
 
 ARG TARGETPLATFORM BUILDPLATFORM
 ENV DEBIAN_FRONTEND="noninteractive"
-ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en
 
 RUN apt-get -y update && apt-get -y upgrade && \
     apt-get install -y software-properties-common && \
@@ -26,4 +25,4 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
     && cd bindings/python/ && python3 setup.py bdist_wheel \
     && cd dist && ls && pip3 install --no-cache-dir megasdk-*.whl
 
-ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en
