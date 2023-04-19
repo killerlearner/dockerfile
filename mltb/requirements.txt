@@ -21,6 +21,7 @@ lk21
 lxml
 markdown
 mediainfo
+mega
 pillow
 psutil
 pybase64
