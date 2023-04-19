@@ -21,7 +21,6 @@ lk21
 lxml
 markdown
 mediainfo
-megasdkrestclient>=0.1.1,<1.0.0
 pillow
 psutil
 pybase64
