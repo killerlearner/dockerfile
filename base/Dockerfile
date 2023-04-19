@@ -15,7 +15,7 @@ RUN echo -e "\e[32m[INFO]: Building and Installing MegaSdkC++.\e[0m" && \
     cd bindings/python/ && \
     python3 setup.py bdist_wheel && \
     cd dist && ls && \
-    pip3 install *.whl
+    pip3 install *.whl mega
   
 RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
