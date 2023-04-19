@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ARG TARGETPLATFORM BUILDPLATFORM
 ENV DEBIAN_FRONTEND="noninteractive"
-ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en
 
 RUN apt-get -y update && apt-get -y upgrade && \
     apt-get install -y software-properties-common && \
