@@ -8,6 +8,7 @@ RUN apt-get -y update && apt-get -y upgrade && \
     add-apt-repository universe && \
     add-apt-repository multiverse && \
     add-apt-repository restricted && \
+    add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable && \
     apt-get install -y python3 python3-pip python3-lxml aria2 \
     qbittorrent-nox tzdata p7zip-full p7zip-rar xz-utils curl wget pv jq \
     ffmpeg locales neofetch git make g++ gcc automake unzip \
