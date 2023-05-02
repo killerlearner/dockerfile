@@ -25,6 +25,9 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
     && cd bindings/python/ && python3 setup.py bdist_wheel \
     && cd dist && ls && pip3 install --no-cache-dir megasdk-*.whl
 
+# Install Rclone
+RUN curl https://rclone.org/install.sh | bash 
+
 RUN /bin/sh -c locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8 LANGUAGE=en_US:en
 
