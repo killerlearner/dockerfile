@@ -26,7 +26,6 @@ pymongo
 pyrogram
 python-dotenv
 python-magic
-qbittorrent-api
 requests
 speedtest-cli
 telegraph
