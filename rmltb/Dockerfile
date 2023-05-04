@@ -10,7 +10,8 @@ RUN apt-get -y update && apt-get -y upgrade && \
     add-apt-repository restricted && \
     apt-get install -y python3 python3-pip python3-lxml \
     tzdata p7zip-full xz-utils curl wget pv jq autoconf \
-    ffmpeg locales neofetch git make g++ gcc automake unzip
+    ffmpeg locales neofetch git make g++ gcc automake unzip \
+    libmagic-dev libcurl4-openssl-dev libssl-dev libsqlite3-dev libfreeimage-dev libpq-dev libffi-dev
 
 # Install Rclone
 RUN curl https://rclone.org/install.sh | bash 
