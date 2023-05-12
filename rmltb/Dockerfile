@@ -8,11 +8,23 @@ RUN apt-get -y update && apt-get -y upgrade && \
     add-apt-repository universe && \
     add-apt-repository multiverse && \
     add-apt-repository restricted && \
-    apt-get install -y python3 python3-pip python3-lxml \
-    tzdata p7zip-full xz-utils curl wget pv jq autoconf \
+    apt-get install -y python3 python3-pip python3-lxml aria2 \
+    tzdata p7zip-full p7zip-rar xz-utils curl wget pv jq \
     ffmpeg locales neofetch git make g++ gcc automake unzip \
-    libmagic-dev libcurl4-openssl-dev libssl-dev libsqlite3-dev libfreeimage-dev libpq-dev libffi-dev
+    autoconf libtool libsodium-dev libcurl4-openssl-dev libc-ares-dev swig \
+    libssl-dev libcrypto++-dev zlib1g-dev libsqlite3-dev libfreeimage-dev
 
+# Installing Mega SDK Python Binding
+ENV PYTHONWARNINGS=ignore
+ENV MEGA_SDK_VERSION="4.10.0"
+RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION /home/sdk \
+    && cd /home/sdk && rm -rf .git \
+    && autoupdate -fIv && ./autogen.sh \
+    && ./configure --disable-silent-rules --enable-python --with-sodium --disable-examples \
+    && make -j$(nproc --all) \
+    && cd bindings/python/ && python3 setup.py bdist_wheel \
+    && cd dist && ls && pip3 install --no-cache-dir megasdk-*.whl
+    
 # Install Rclone
 RUN curl https://rclone.org/install.sh | bash 
 
